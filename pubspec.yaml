@@ -44,6 +44,7 @@ dependencies:
   curved_labeled_navigation_bar: ^2.0.6
   intl: any
   form_builder_validators: ^11.1.2
+  shared_preferences: ^2.5.3
 
 dev_dependencies:
   flutter_test:
