@@ -1,8 +1,9 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:mobileoffice3/pages/bolle/addbolle.dart';
 import 'package:mobileoffice3/pages/bolle/bollemenu.dart';
 import 'package:mobileoffice3/pages/clienti/customersmenu.dart';
-import 'package:mobileoffice3/pages/nuovoform.dart';
+import 'package:mobileoffice3/providers/apppreferences.dart';
 //import 'package:mobileoffice3/pages/scrivifile.dart';
 
 class HomePage extends StatefulWidget {
@@ -106,7 +107,7 @@ class _HomePageState extends State<HomePage> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => NuovoForm()),
+            MaterialPageRoute(builder: (context) => AddBolle()),
           );
           setState(() {
             _counter = (_counter + 1);
