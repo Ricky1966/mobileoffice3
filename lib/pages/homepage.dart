@@ -24,7 +24,7 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: Center(child: Image.asset("images/img2.png")),
+      body: Center(child: Image.asset("images/logo.png")),
 
       drawer: Drawer(
         child: ListView(
@@ -45,7 +45,7 @@ class _HomePageState extends State<HomePage> {
                 style: TextStyle(color: Colors.black),
               ),
               currentAccountPicture: CircleAvatar(
-                backgroundImage: AssetImage("images/img2.png"),
+                backgroundImage: AssetImage("images/logo.png"),
               ),
               /*
               otherAccountsPictures: [
