@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mobileoffice3/providers/scrivifilecontroller.dart';
+import 'package:mobileoffice3/providers/customerscontroller.dart';
 
 //ignore: must_be_immutable
 class ScriviFile extends StatelessWidget {
-  ScriviFileController scriviFileController = Get.find<ScriviFileController>();
+  Customerscontroller scriviFileController = Get.find<Customerscontroller>();
   ScriviFile({super.key});
   DateTime selectedDate = DateTime.now();
   TextEditingController dateCtl = TextEditingController();
