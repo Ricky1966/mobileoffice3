@@ -4,11 +4,11 @@ import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:pdf/widgets.dart' as pw;
 
-class Bollecontroller extends GetxController {
-  late String customerController;
-
-  late String cityController;
-  late String shireController;
+class BolleController extends GetxController {
+  late String intestazioneController;
+  late String numBollaController;
+  late String dateBollaController;
+  late String dateAddBollaController;
   RxString content = 'Data Read from file will appear here'.obs;
 
   Future<PermissionStatus> _getStoragePermission() async {
@@ -53,9 +53,9 @@ class Bollecontroller extends GetxController {
   }
 
   void writeFile() async {
-    if (customerController.isNotEmpty ||
-        cityController.isNotEmpty ||
-        shireController.isNotEmpty) {
+    if (intestazioneController.isNotEmpty ||
+        numBollaController.isNotEmpty ||
+        dateBollaController.isNotEmpty) {
       PermissionStatus permissionStatus = await _getStoragePermission();
       if (permissionStatus == PermissionStatus.granted) {
         try {
@@ -68,7 +68,7 @@ class Bollecontroller extends GetxController {
             externalStoragePath += "/Customers.txt";
             File file = File(externalStoragePath);
             file.writeAsString(
-              "$customerController,$cityController,$shireController,${Platform.lineTerminator}",
+              "$intestazioneController,$numBollaController,$dateBollaController,${Platform.lineTerminator}",
               mode: FileMode.writeOnlyAppend,
             );
             content.value = 'File written successfully!';
@@ -90,7 +90,7 @@ class Bollecontroller extends GetxController {
       try {
         String? externalStoragePath = await _getDocumentsPath();
         if (externalStoragePath != null) {
-          externalStoragePath += "/Customers.txt";
+          externalStoragePath += "/Bolle.txt";
           File file = File(externalStoragePath);
           content.value =
               'File read successfully:${Platform.lineTerminator}${Platform.lineTerminator}${await file.readAsString()}';
@@ -110,14 +110,14 @@ class Bollecontroller extends GetxController {
         build:
             (pw.Context context) => pw.Center(
               child: pw.Text(
-                'Customer: $customerController ${Platform.lineTerminator}Address: $cityController ${Platform.lineTerminator} Shire: $shireController',
+                'Customer: $intestazioneController ${Platform.lineTerminator}Address: $numBollaController ${Platform.lineTerminator} Shire: $dateBollaController',
                 textAlign: pw.TextAlign.center,
                 style: const pw.TextStyle(fontSize: 40),
               ),
             ),
       ),
     );
-    final pdffile = File('$externalStoragePath/Customers.pdf');
+    final pdffile = File('$externalStoragePath/Bolle.pdf');
     await pdffile.writeAsBytes(await pdf.save());
   }
 }

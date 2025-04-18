@@ -4,7 +4,7 @@ import 'package:mobileoffice3/providers/customerscontroller.dart';
 
 //ignore: must_be_immutable
 class ScriviFile extends StatelessWidget {
-  Customerscontroller scriviFileController = Get.find<Customerscontroller>();
+  ClientiController scriviFileController = Get.find<ClientiController>();
   ScriviFile({super.key});
   DateTime selectedDate = DateTime.now();
   TextEditingController dateCtl = TextEditingController();

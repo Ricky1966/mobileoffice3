@@ -3,12 +3,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
-import 'package:mobileoffice3/providers/customerscontroller.dart';
+import 'package:mobileoffice3/providers/bollecontroller.dart';
 
 // ignore: must_be_immutable
 class AddBolle extends StatelessWidget {
   AddBolle({super.key});
-  Customerscontroller scriviFileController = Get.find<Customerscontroller>();
+
+  BolleController addBolleController = Get.find<BolleController>();
 
   final GlobalKey<FormBuilderState> _formKey = GlobalKey<FormBuilderState>();
   @override
@@ -17,7 +18,7 @@ class AddBolle extends StatelessWidget {
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: SizedBox(
-          height: 400,
+          height: 450,
           width: MediaQuery.of(context).size.width,
           child: Card(
             elevation: 30,
@@ -30,44 +31,47 @@ class AddBolle extends StatelessWidget {
               child: Column(
                 children: [
                   FormBuilderTextField(
+                    name: 'Data Odierna',
+                    decoration: const InputDecoration(labelText: 'Data'),
+                    maxLength: 50,
+                  ),
+                  const SizedBox(height: 10),
+                  FormBuilderTextField(
+                    maxLength: 50,
                     name: 'Intestazione',
                     decoration: const InputDecoration(
                       labelText: 'Intestazione max 50 caratteri',
                     ),
-                    maxLength: 50,
                   ),
                   const SizedBox(height: 10),
                   FormBuilderTextField(
-                    maxLength: 50,
-                    name: 'Città',
+                    maxLength: 20,
+                    name: 'Numero Bolla',
                     decoration: const InputDecoration(
-                      labelText: 'Città max 50 caratteri',
+                      labelText: 'Numero Bolla',
                     ),
                   ),
                   const SizedBox(height: 10),
                   FormBuilderTextField(
-                    maxLength: 2,
-                    name: 'Provincia',
-                    decoration: const InputDecoration(
-                      labelText: 'Provincia max 2 caratteri',
-                    ),
+                    maxLength: 20,
+                    name: 'Data Bolla',
+                    decoration: const InputDecoration(labelText: 'Data Bolla'),
                   ),
                   const SizedBox(height: 10),
-
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       ElevatedButton(
                         onPressed: () {
                           if (_formKey.currentState!.saveAndValidate()) {
-                            scriviFileController.customerController =
+                            addBolleController.intestazioneController =
                                 _formKey
                                     .currentState!
                                     .fields['Intestazione']!
                                     .value;
-                            scriviFileController.cityController =
+                            addBolleController.numBollaController =
                                 _formKey.currentState!.fields['Città']!.value;
-                            scriviFileController.shireController =
+                            addBolleController.dateBollaController =
                                 _formKey
                                     .currentState!
                                     .fields['Provincia']!
@@ -75,7 +79,7 @@ class AddBolle extends StatelessWidget {
                             print(
                               _formKey.currentState!.value.entries.toList(),
                             );
-                            scriviFileController.writeFile();
+                            addBolleController.writeFile();
                           }
                         },
                         child: const Text('Submit'),

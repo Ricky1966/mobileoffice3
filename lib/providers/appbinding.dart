@@ -5,7 +5,7 @@ import 'package:mobileoffice3/providers/customerscontroller.dart';
 class AppBindings implements Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(() => Customerscontroller());
-    Get.lazyPut(() => Bollecontroller());
+    Get.lazyPut(() => ClientiController());
+    Get.lazyPut(() => BolleController());
   }
 }

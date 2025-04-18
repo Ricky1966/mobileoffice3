@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
-import 'package:mobileoffice3/providers/bollecontroller.dart';
+import 'package:mobileoffice3/providers/customerscontroller.dart';
 
 // ignore: must_be_immutable
 class AddCustomers extends StatelessWidget {
   AddCustomers({super.key});
 
-  Bollecontroller bolleController = Get.find<Bollecontroller>();
+  ClientiController addCustomersController = Get.find<ClientiController>();
 
   final GlobalKey<FormBuilderState> _formKey = GlobalKey<FormBuilderState>();
   @override
@@ -16,7 +16,7 @@ class AddCustomers extends StatelessWidget {
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: SizedBox(
-          height: 400,
+          height: 350,
           width: MediaQuery.of(context).size.width,
           child: Card(
             elevation: 30,
@@ -59,14 +59,14 @@ class AddCustomers extends StatelessWidget {
                       ElevatedButton(
                         onPressed: () {
                           if (_formKey.currentState!.saveAndValidate()) {
-                            bolleController.customerController =
+                            addCustomersController.clienteController =
                                 _formKey
                                     .currentState!
                                     .fields['Intestazione']!
                                     .value;
-                            bolleController.cityController =
+                            addCustomersController.cittaController =
                                 _formKey.currentState!.fields['Città']!.value;
-                            bolleController.shireController =
+                            addCustomersController.provinciaController =
                                 _formKey
                                     .currentState!
                                     .fields['Provincia']!
@@ -74,7 +74,7 @@ class AddCustomers extends StatelessWidget {
                             print(
                               _formKey.currentState!.value.entries.toList(),
                             );
-                            bolleController.writeFile();
+                            addCustomersController.writeFile();
                           }
                         },
                         child: const Text('Submit'),

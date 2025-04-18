@@ -4,11 +4,10 @@ import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:pdf/widgets.dart' as pw;
 
-class Customerscontroller extends GetxController {
-  late String customerController;
-
-  late String cityController;
-  late String shireController;
+class ClientiController extends GetxController {
+  late String clienteController;
+  late String cittaController;
+  late String provinciaController;
   RxString content = 'Data Read from file will appear here'.obs;
 
   Future<PermissionStatus> _getStoragePermission() async {
@@ -53,9 +52,9 @@ class Customerscontroller extends GetxController {
   }
 
   void writeFile() async {
-    if (customerController.isNotEmpty ||
-        cityController.isNotEmpty ||
-        shireController.isNotEmpty) {
+    if (clienteController.isNotEmpty ||
+        cittaController.isNotEmpty ||
+        provinciaController.isNotEmpty) {
       PermissionStatus permissionStatus = await _getStoragePermission();
       if (permissionStatus == PermissionStatus.granted) {
         try {
@@ -68,7 +67,7 @@ class Customerscontroller extends GetxController {
             externalStoragePath += "/Customers.txt";
             File file = File(externalStoragePath);
             file.writeAsString(
-              "$customerController,$cityController,$shireController,${Platform.lineTerminator}",
+              "$clienteController,$cittaController,$provinciaController,${Platform.lineTerminator}",
               mode: FileMode.writeOnlyAppend,
             );
             content.value = 'File written successfully!';
@@ -110,7 +109,7 @@ class Customerscontroller extends GetxController {
         build:
             (pw.Context context) => pw.Center(
               child: pw.Text(
-                'Customer: $customerController ${Platform.lineTerminator}Address: $cityController ${Platform.lineTerminator} Shire: $shireController',
+                'Customer: $clienteController ${Platform.lineTerminator}Address: $cittaController ${Platform.lineTerminator} Shire: $provinciaController',
                 textAlign: pw.TextAlign.center,
                 style: const pw.TextStyle(fontSize: 40),
               ),
