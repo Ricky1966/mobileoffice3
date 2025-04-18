@@ -15,7 +15,7 @@ class AddCustomers extends StatelessWidget {
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.all(16.0),
-        child: Container(
+        child: SizedBox(
           height: 400,
           width: MediaQuery.of(context).size.width,
           child: Card(
