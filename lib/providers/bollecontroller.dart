@@ -1,6 +1,10 @@
 import 'dart:io';
+import 'dart:ui';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:pdf/pdf.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:pdf/widgets.dart' as pw;
 
@@ -87,51 +91,75 @@ class BolleController extends GetxController {
     final pdf = pw.Document();
     pdf.addPage(
       pw.Page(
+        pageFormat: PdfPageFormat.a4.landscape,
+        margin: const pw.EdgeInsets.all(12),
         build:
             (pw.Context context) => pw.Center(
-              widthFactor: 0.5,
-              heightFactor: 0.5,
+              widthFactor: 1.0,
+              heightFactor: 1.0,
               child: pw.Column(
                 mainAxisAlignment: pw.MainAxisAlignment.center,
                 crossAxisAlignment: pw.CrossAxisAlignment.center,
                 children: [
-                  pw.Text('Bolle', style: const pw.TextStyle(fontSize: 50)),
-                  pw.SizedBox(height: 20),
-                  /*
-                  pw.Image(
-                    const pw.MemoryImage(
-                      (await rootBundle.load('assets/images/logo.png'))
-                          .buffer
-                          .asUint8List(),
+                  pw.Container(
+                    width: 2700,
+                    height: 20,
+                    decoration: pw.BoxDecoration(
+                      color: PdfColors.grey100,
+                      shape: pw.BoxShape.rectangle,
+                      border: pw.Border.all(color: PdfColors.black, width: 2.5),
+                      borderRadius: pw.BorderRadius.circular(5),
                     ),
-                    width: 100,
-                    height: 100,
+                    alignment: pw.Alignment.center,
                   ),
-                  */
                   pw.Text(
-                    'Data Insrimento: $dateAddBollaController ${Platform.lineTerminator}',
+                    'Bolle',
+                    style: pw.TextStyle(
+                      fontSize: 40,
+                      fontWeight: pw.FontWeight.bold,
+                    ),
                     textAlign: pw.TextAlign.center,
-                    style: const pw.TextStyle(fontSize: 40),
                   ),
-                  pw.SizedBox(height: 20),
-                  pw.Text(
-                    'Customer: $intestazioneController ${Platform.lineTerminator}',
-                    textAlign: pw.TextAlign.center,
-                    style: const pw.TextStyle(fontSize: 40),
+                  pw.SizedBox(height: 20, width: 20),
+                  pw.Row(
+                    mainAxisAlignment: pw.MainAxisAlignment.center,
+                    crossAxisAlignment: pw.CrossAxisAlignment.center,
+                    children: [
+                      pw.Text(
+                        DateFormat("dd/MM/yyyy").format(dateAddBollaController),
+                        style: pw.TextStyle(
+                          fontSize: 16,
+                          fontWeight: pw.FontWeight.bold,
+                        ),
+                        textAlign: pw.TextAlign.center,
+                      ),
+                      pw.SizedBox(width: 10),
+                      pw.Text(
+                        intestazioneController,
+                        style: pw.TextStyle(
+                          fontSize: 16,
+                          fontWeight: pw.FontWeight.bold,
+                        ),
+                      ),
+                      pw.SizedBox(width: 10),
+                      pw.Text(
+                        numBollaController,
+                        style: pw.TextStyle(
+                          fontSize: 16,
+                          fontWeight: pw.FontWeight.bold,
+                        ),
+                      ),
+                      pw.SizedBox(width: 10),
+                      pw.Text(
+                        DateFormat("dd/MM/yyyy").format(dateBollaController),
+                        style: pw.TextStyle(
+                          fontSize: 16,
+                          fontWeight: pw.FontWeight.bold,
+                        ),
+                      ),
+                      pw.SizedBox(width: 10),
+                    ],
                   ),
-                  pw.SizedBox(height: 20),
-                  pw.Text(
-                    'Number: $numBollaController ${Platform.lineTerminator} Del: $dateBollaController',
-                    textAlign: pw.TextAlign.center,
-                    style: const pw.TextStyle(fontSize: 40),
-                  ),
-                  pw.SizedBox(height: 20),
-                  pw.Text(
-                    'Del: $dateBollaController',
-                    textAlign: pw.TextAlign.center,
-                    style: const pw.TextStyle(fontSize: 40),
-                  ),
-                  pw.SizedBox(height: 20),
                 ],
               ),
             ),
