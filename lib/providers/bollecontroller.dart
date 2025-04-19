@@ -7,8 +7,9 @@ import 'package:pdf/widgets.dart' as pw;
 class BolleController extends GetxController {
   late String intestazioneController;
   late String numBollaController;
-  late String dateBollaController;
-  late String dateAddBollaController;
+  late DateTime dateBollaController;
+  late DateTime dateAddBollaController;
+
   RxString content = 'Data Read from file will appear here'.obs;
 
   Future<PermissionStatus> _getStoragePermission() async {
@@ -53,9 +54,7 @@ class BolleController extends GetxController {
   }
 
   void writeFile() async {
-    if (intestazioneController.isNotEmpty ||
-        numBollaController.isNotEmpty ||
-        dateBollaController.isNotEmpty) {
+    if (intestazioneController.isNotEmpty || numBollaController.isNotEmpty) {
       PermissionStatus permissionStatus = await _getStoragePermission();
       if (permissionStatus == PermissionStatus.granted) {
         try {
@@ -65,10 +64,10 @@ class BolleController extends GetxController {
             await createPDF(externalStoragePath);
             // Create the file in the Documents folder
             //Platform.lineTerminator is used to add new line to the text
-            externalStoragePath += "/Customers.txt";
+            externalStoragePath += "/Bolle.txt";
             File file = File(externalStoragePath);
             file.writeAsString(
-              "$intestazioneController,$numBollaController,$dateBollaController,${Platform.lineTerminator}",
+              "$dateAddBollaController,$intestazioneController,$numBollaController,$dateBollaController,${Platform.lineTerminator}",
               mode: FileMode.writeOnlyAppend,
             );
             content.value = 'File written successfully!';
@@ -82,6 +81,64 @@ class BolleController extends GetxController {
       print('Enter some content first in the textbox');
       content.value = 'Enter some content first in the textbox';
     }
+  }
+
+  createPDF(String? externalStoragePath) async {
+    final pdf = pw.Document();
+    pdf.addPage(
+      pw.Page(
+        build:
+            (pw.Context context) => pw.Center(
+              widthFactor: 0.5,
+              heightFactor: 0.5,
+              child: pw.Column(
+                mainAxisAlignment: pw.MainAxisAlignment.center,
+                crossAxisAlignment: pw.CrossAxisAlignment.center,
+                children: [
+                  pw.Text('Bolle', style: const pw.TextStyle(fontSize: 50)),
+                  pw.SizedBox(height: 20),
+                  /*
+                  pw.Image(
+                    const pw.MemoryImage(
+                      (await rootBundle.load('assets/images/logo.png'))
+                          .buffer
+                          .asUint8List(),
+                    ),
+                    width: 100,
+                    height: 100,
+                  ),
+                  */
+                  pw.Text(
+                    'Data Insrimento: $dateAddBollaController ${Platform.lineTerminator}',
+                    textAlign: pw.TextAlign.center,
+                    style: const pw.TextStyle(fontSize: 40),
+                  ),
+                  pw.SizedBox(height: 20),
+                  pw.Text(
+                    'Customer: $intestazioneController ${Platform.lineTerminator}',
+                    textAlign: pw.TextAlign.center,
+                    style: const pw.TextStyle(fontSize: 40),
+                  ),
+                  pw.SizedBox(height: 20),
+                  pw.Text(
+                    'Number: $numBollaController ${Platform.lineTerminator} Del: $dateBollaController',
+                    textAlign: pw.TextAlign.center,
+                    style: const pw.TextStyle(fontSize: 40),
+                  ),
+                  pw.SizedBox(height: 20),
+                  pw.Text(
+                    'Del: $dateBollaController',
+                    textAlign: pw.TextAlign.center,
+                    style: const pw.TextStyle(fontSize: 40),
+                  ),
+                  pw.SizedBox(height: 20),
+                ],
+              ),
+            ),
+      ),
+    );
+    final pdffile = File('$externalStoragePath/Bolle.pdf');
+    await pdffile.writeAsBytes(await pdf.save());
   }
 
   void readFile() async {
@@ -100,24 +157,5 @@ class BolleController extends GetxController {
         content.value = 'Error in reading file=$e';
       }
     }
-  }
-
-  createPDF(String? externalStoragePath) async {
-    final pdf = pw.Document();
-    //final pdffile = File('/storage/emulated/0/Documents/example.pdf');
-    pdf.addPage(
-      pw.Page(
-        build:
-            (pw.Context context) => pw.Center(
-              child: pw.Text(
-                'Customer: $intestazioneController ${Platform.lineTerminator}Address: $numBollaController ${Platform.lineTerminator} Shire: $dateBollaController',
-                textAlign: pw.TextAlign.center,
-                style: const pw.TextStyle(fontSize: 40),
-              ),
-            ),
-      ),
-    );
-    final pdffile = File('$externalStoragePath/Bolle.pdf');
-    await pdffile.writeAsBytes(await pdf.save());
   }
 }

@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:mobileoffice3/providers/bollecontroller.dart';
 
 // ignore: must_be_immutable
@@ -18,7 +19,7 @@ class AddBolle extends StatelessWidget {
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: SizedBox(
-          height: 450,
+          height: 500,
           width: MediaQuery.of(context).size.width,
           child: Card(
             elevation: 30,
@@ -30,10 +31,16 @@ class AddBolle extends StatelessWidget {
               key: _formKey,
               child: Column(
                 children: [
-                  FormBuilderTextField(
-                    name: 'Data Odierna',
-                    decoration: const InputDecoration(labelText: 'Data'),
-                    maxLength: 50,
+                  FormBuilderDateTimePicker(
+                    name: 'Data registrazione',
+                    initialTime: TimeOfDay.now(),
+                    inputType: InputType.date,
+                    format: DateFormat('dd/MM/yyyy'),
+                    decoration: const InputDecoration(
+                      labelText: 'Data registrazione',
+                      suffixIcon: Icon(Icons.calendar_today),
+                    ),
+                    initialValue: DateTime.now(),
                   ),
                   const SizedBox(height: 10),
                   FormBuilderTextField(
@@ -52,10 +59,16 @@ class AddBolle extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 10),
-                  FormBuilderTextField(
-                    maxLength: 20,
+                  FormBuilderDateTimePicker(
                     name: 'Data Bolla',
-                    decoration: const InputDecoration(labelText: 'Data Bolla'),
+                    initialTime: TimeOfDay.now(),
+                    inputType: InputType.date,
+                    format: DateFormat('dd/MM/yyyy'),
+                    decoration: const InputDecoration(
+                      labelText: 'Data emissione bolla',
+                      suffixIcon: Icon(Icons.calendar_today),
+                    ),
+                    initialValue: DateTime.now(),
                   ),
                   const SizedBox(height: 10),
                   Row(
@@ -64,18 +77,32 @@ class AddBolle extends StatelessWidget {
                       ElevatedButton(
                         onPressed: () {
                           if (_formKey.currentState!.saveAndValidate()) {
+                            addBolleController.dateBollaController =
+                                _formKey
+                                    .currentState!
+                                    .fields['Data registrazione']!
+                                    .value;
+                            print(addBolleController.dateBollaController);
                             addBolleController.intestazioneController =
                                 _formKey
                                     .currentState!
                                     .fields['Intestazione']!
                                     .value;
+                            print(addBolleController.intestazioneController);
                             addBolleController.numBollaController =
-                                _formKey.currentState!.fields['Città']!.value;
-                            addBolleController.dateBollaController =
                                 _formKey
                                     .currentState!
-                                    .fields['Provincia']!
+                                    .fields['Numero Bolla']!
                                     .value;
+                            print(
+                              addBolleController.numBollaController.toString(),
+                            );
+                            addBolleController.dateAddBollaController =
+                                _formKey
+                                    .currentState!
+                                    .fields['Data Bolla']!
+                                    .value;
+                            print(addBolleController.dateAddBollaController);
                             print(
                               _formKey.currentState!.value.entries.toList(),
                             );
